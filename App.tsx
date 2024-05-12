@@ -1,11 +1,39 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import MazeBall from './mazeBall';
+import Animated, {
+  withSpring,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+
+import {
+  Accelerometer,
+  Barometer,
+  DeviceMotion,
+  Gyroscope,
+  LightSensor,
+  Magnetometer,
+  MagnetometerUncalibrated,
+  Pedometer,
+} from 'expo-sensors';
+
+Accelerometer.isAvailableAsync().then(result => {
+  console.log('Is accelerometer available?', result);
+});
 
 export default function App() {
+
+  const width = useSharedValue(100);
+
+  const handlePress = () => {
+    width.value = withSpring(width.value + 50);
+  };
+
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <MazeBall/>
     </View>
   );
 }
